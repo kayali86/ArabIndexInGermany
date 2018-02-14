@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="kayali.developer.android.arabindexingermany.AddCompanyActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:id="@+id/image_button"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/add_image"
+            android:onClick="addImage"
+            android:contentDescription= "@string/sContentDisc"
+            android:layout_marginTop="@dimen/dMarginT"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/company_name"
+            android:background="@drawable/edit_shape"
+            android:padding="@dimen/dEditTxtPadding"
+            android:layout_marginTop="@dimen/dMarginT"
+            android:hint="@string/sCompanyName"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/address"
+            android:background="@drawable/edit_shape"
+            android:padding="@dimen/dEditTxtPadding"
+            android:layout_marginTop="@dimen/dMarginT"
+            android:hint="@string/sAddress"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/services"
+            android:background="@drawable/edit_shape"
+            android:padding="@dimen/dEditTxtPadding"
+            android:layout_marginTop="@dimen/dMarginT"
+            android:minLines="2"
+            android:hint="@string/sServices"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/payment"
+            android:background="@drawable/edit_shape"
+            android:padding="@dimen/dEditTxtPadding"
+            android:layout_marginTop="@dimen/dMarginT"
+            android:hint="@string/sPayment"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/other_services"
+            android:background="@drawable/edit_shape"
+            android:padding="@dimen/dEditTxtPadding"
+            android:layout_marginTop="@dimen/dMarginT"
+            android:hint="@string/sOtherServices"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/notes"
+            android:background="@drawable/edit_shape"
+            android:padding="@dimen/dEditTxtPadding"
+            android:layout_marginTop="@dimen/dMarginT"
+            android:hint="@string/sNotes"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/opening_hours"
+            android:background="@drawable/edit_shape"
+            android:padding="@dimen/dEditTxtPadding"
+            android:layout_marginTop="@dimen/dMarginT"
+            android:minLines="2"
+            android:hint="@string/sOHours"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/contact_info"
+            android:background="@drawable/edit_shape"
+            android:padding="@dimen/dEditTxtPadding"
+            android:layout_marginTop="@dimen/dMarginT"
+            android:hint="@string/sContact"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="* Please select a Category for your Company:"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="Select Category"
+            android:spinnerMode="dropdown"
+            android:id="@+id/categories_spinner"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="* Please select your State:"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="Select State"
+            android:spinnerMode="dropdown"
+            android:id="@+id/states_spinner"/>
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/parking"
+            android:padding="@dimen/dEditTxtPadding"
+            android:layout_marginTop="@dimen/dMarginT"
+            android:hint="@string/sParking"/>
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/appointment"
+            android:padding="@dimen/dEditTxtPadding"
+            android:layout_marginTop="@dimen/dMarginT"
+            android:hint="@string/sAppointment"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sSubmitButton"
+            android:layout_marginTop="40dp"
+            android:onClick="submitButtonClicked"/>
+
+    </LinearLayout>
+
+</ScrollView>

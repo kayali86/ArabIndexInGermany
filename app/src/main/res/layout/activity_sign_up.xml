@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="kayali.developer.android.arabindexingermany.SignUpActivity">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/signUp_name"
+        android:inputType="textCapWords"
+        android:background="@drawable/edit_shape"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:hint="@string/sEnterName"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/signUp_mail"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/edit_shape"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:hint="@string/sEnterMail"/>
+
+    <EditText
+        android:id="@+id/signUp_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/sEnterPass"
+        android:background="@drawable/edit_shape"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/signUp_pass2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/sEnterPass2"
+        android:background="@drawable/edit_shape"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:inputType="textPassword" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sSignUp"
+        android:layout_marginTop="8dp"
+        android:onClick="signUp"/>
+
+</LinearLayout>

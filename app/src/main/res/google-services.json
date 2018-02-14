@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "408992466109",
+    "firebase_url": "https://arabindexingermany.firebaseio.com",
+    "project_id": "arabindexingermany",
+    "storage_bucket": "arabindexingermany.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:408992466109:android:0fa63a35c07ded26",
+        "android_client_info": {
+          "package_name": "kayali.developer.android.arabindexingermany"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "408992466109-bcu05joo01f48ovgk97cbkvikevuq0ie.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kayali.developer.android.arabindexingermany",
+            "certificate_hash": "6f376dd90454c2063ec0f265c3bad60776d783a8"
+          }
+        },
+        {
+          "client_id": "408992466109-1sbng4dqnbcu37ndke8l5e5lkehdplef.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmeSWKET0FqpxGXnK7eiBJKiy7Zji_FAQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "408992466109-1sbng4dqnbcu37ndke8l5e5lkehdplef.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
