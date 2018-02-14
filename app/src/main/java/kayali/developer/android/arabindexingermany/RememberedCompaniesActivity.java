@@ -102,6 +102,11 @@ public class RememberedCompaniesActivity extends AppCompatActivity {
                     viewHolder.setCompanyRatingAverage(model.getCompanyRatingAverage());
                 }
 
+
+                if (!TextUtils.isEmpty(model.getCompanyRatingTimes())){
+                    viewHolder.setCompanyRatingTimes(model.getCompanyRatingTimes());
+                }
+
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -159,7 +164,11 @@ public class RememberedCompaniesActivity extends AppCompatActivity {
             cardCompanyRatingAverage.setRating(newCompanyRatingAverage);
         }
 
-
+        // To set a Rating Times in CardView in Class SummaryForCard
+        public void setCompanyRatingTimes(String companyRatingTimes){
+            TextView cardCompanyRatingTimes = mView.findViewById(R.id.rating_times);
+            cardCompanyRatingTimes.setText(companyRatingTimes);
+        }
 
 
     }
@@ -169,7 +178,7 @@ public class RememberedCompaniesActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        menu.findItem(R.id.backIcon).setVisible(true);
+        menu.findItem(R.id.homeIcon).setVisible(true);
         menu.findItem(R.id.addIcon).setVisible(false);
         menu.findItem(R.id.remembered).setVisible(false);
 
@@ -208,7 +217,7 @@ public class RememberedCompaniesActivity extends AppCompatActivity {
         }
 
         // Home Button in Actionbar
-        else if(id == R.id.backIcon) {
+        else if(id == R.id.homeIcon) {
             Intent backIntent = new Intent(RememberedCompaniesActivity.this, MainActivity.class);
             startActivity(backIntent);
         }

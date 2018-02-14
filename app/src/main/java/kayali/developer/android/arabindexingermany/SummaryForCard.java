@@ -5,7 +5,7 @@ public class SummaryForCard {
 
 
     private String imagePath, companyName,companyAddress, companyServices, companyRatingAverage;
-    private int companyRatingTimes;
+    private int companyRatingTimesInt;
 
 
     // Constructor
@@ -19,7 +19,7 @@ public class SummaryForCard {
         this.companyAddress = address;
         this.companyServices = companyServices;
         this.companyRatingAverage = companyRatingAverage;
-        this.companyRatingTimes = companyRatingTimes;
+        this.companyRatingTimesInt = companyRatingTimes;
 
     }
 
@@ -45,37 +45,9 @@ public class SummaryForCard {
         return companyRatingAverage;
     }
 
-    public int getCompanyRatingTimes() {
+    public String getCompanyRatingTimes() {
+        String companyRatingTimes = String.valueOf(companyRatingTimesInt);
         return companyRatingTimes;
     }
 
-    // Setters
-/*
-    public void setImagePath (String imagePath){
-        this.imagePath = imagePath;
-    }
-
-    public void setCompanyName (String companyName){
-        this.companyName = companyName;
-    }
-
-    public void setCompanyServices (String companyServices){
-        this.companyServices = companyServices;
-    }
-
-    public void setAddress (String address){
-        this.companyAddress = address;
-    }
-
-
-    public void setCompanyRatingAverage(String companyRatingAverage) {
-        this.companyRatingAverage = companyRatingAverage;
-
-
-    public void setCompanyRatingTimes(int companyRatingTimes) {
-        this.companyRatingTimes = companyRatingTimes;
-    }
-
-    }
-*/
 }

@@ -37,6 +37,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
     String company_key;
 
     private ImageView dImageView;
+    private TextView dRatingTimesV;
     private RatingBar dNewRatingBar;
     private RatingBar dAverageRatingBar;
     private Button rateButton;
@@ -75,6 +76,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
 
         dImageView = findViewById(R.id.dImageView);
+        dRatingTimesV = findViewById(R.id.rating_times);
         dNewRatingBar = findViewById(R.id.new_rate_bar);
         dAverageRatingBar = findViewById(R.id.average_rate_bar);
         rateButton = findViewById(R.id.rating_button);
@@ -127,6 +129,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
                 String companyContactInfo = (String) dataSnapshot.child("companyContactInfo").getValue();
                 Picasso.with(CompanyDetailsActivity.this).load(imagePath).into(dImageView);
 
+                dRatingTimesV.setText(companyOldRatingTimes);
                 dAverageRatingBar.setRating(companyOldRatingAverage);
 
 
@@ -212,7 +215,7 @@ public class CompanyDetailsActivity extends AppCompatActivity {
             settingsIntent.putExtra("email", authCurrentUser.getEmail());
             startActivity(settingsIntent);
 
-        }else if(id == R.id.backIcon){
+        }else if(id == R.id.homeIcon){
             Intent backIntent = new Intent(CompanyDetailsActivity.this, MainActivity.class);
             startActivity(backIntent);
 
@@ -222,5 +225,5 @@ public class CompanyDetailsActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    
+
 }

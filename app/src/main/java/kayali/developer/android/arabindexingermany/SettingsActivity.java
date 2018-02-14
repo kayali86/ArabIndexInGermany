@@ -81,7 +81,7 @@ public class SettingsActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         // Back Button in Actionbar
-        if (id == R.id.backIcon){
+        if (id == R.id.homeIcon){
             Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
             startActivity(intent);
 
