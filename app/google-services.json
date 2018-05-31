@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "408992466109-6co62o57uoke4cc28598vbsl5pp1bnqq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kayali.developer.android.arabindexingermany",
+            "certificate_hash": "c5921dfc4ddf08ea46c807b6fd95ecb0c83ee1b3"
+          }
+        },
+        {
           "client_id": "408992466109-bcu05joo01f48ovgk97cbkvikevuq0ie.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

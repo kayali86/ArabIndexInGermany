@@ -164,7 +164,7 @@ public class AddCompanyActivity extends AppCompatActivity {
             imagePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    final Uri downloadURL = taskSnapshot.getDownloadUrl();
+                    final Uri downloadURL = storageReference.getDownloadUrl().getResult();
 
                     final DatabaseReference newCompany = refCompanies.push();
 
