@@ -13,9 +13,8 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
-
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,6 +37,7 @@ public class AddCompanyActivity extends AppCompatActivity {
     private DatabaseReference refUsers;
     private DatabaseReference refCurrentUser;
     private StorageReference storageReference;
+    private UploadTask uploadTask;
 
 
     private static final int GALLERY_REQUEST = 0;
@@ -69,10 +69,9 @@ public class AddCompanyActivity extends AppCompatActivity {
         authCurrentUser = mAuth.getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         refCompanies = mDatabase.child("companies");
-        refUsers =  mDatabase.child("users");
+        refUsers = mDatabase.child("users");
         refCurrentUser = mDatabase.child("users").child(authCurrentUser.getUid());
         storageReference = FirebaseStorage.getInstance().getReference();
-
 
 
         companyNameV = findViewById(R.id.company_name);
@@ -88,13 +87,11 @@ public class AddCompanyActivity extends AppCompatActivity {
         appointmentV = findViewById(R.id.appointment);
 
 
-
         categoriesSpinner = findViewById(R.id.categories_spinner);
         ArrayAdapter<CharSequence> categoriesAdapter = ArrayAdapter.createFromResource(this,
                 R.array.sCategories, android.R.layout.simple_spinner_item);
         categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoriesSpinner.setAdapter(categoriesAdapter);
-
 
 
         statesSpinner = findViewById(R.id.states_spinner);
@@ -114,7 +111,7 @@ public class AddCompanyActivity extends AppCompatActivity {
         pickIntent.setType("image/*");
 
         Intent chooserIntent = Intent.createChooser(galleryIntent, "Select Image");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
 
         startActivityForResult(chooserIntent, GALLERY_REQUEST);
 
@@ -123,7 +120,7 @@ public class AddCompanyActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK ){
+        if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
             uri = data.getData();
             imageButtonV = findViewById(R.id.image_button);
             imageButtonV.setImageURI(uri);
@@ -152,77 +149,76 @@ public class AddCompanyActivity extends AppCompatActivity {
         final int companyRatingTimes = 0;
 
 
-        if (    !TextUtils.isEmpty(companyNameValue) &&
+        if (!TextUtils.isEmpty(companyNameValue) &&
                 !TextUtils.isEmpty(addressValue) &&
                 !TextUtils.isEmpty(servicesValue) &&
                 !TextUtils.isEmpty(contactInfoValue) &&
                 !TextUtils.isEmpty(categoriesValue) &&
                 !TextUtils.isEmpty(categoriesValue)
-                ){
+                ) {
 
-            StorageReference imagePath = storageReference.child("company_image").child(uri.getLastPathSegment());
-            imagePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            final StorageReference imagePath = storageReference.child("company_image").child(uri.getLastPathSegment());
+            uploadTask = imagePath.putFile(uri);
+
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    final Uri downloadURL = taskSnapshot.getDownloadUrl();
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    // Continue with the task to get the download URL
+                    return imagePath.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        final Uri downloadUri = task.getResult();
+                        final DatabaseReference newCompany = refCompanies.push();
 
-                    final DatabaseReference newCompany = refCompanies.push();
-
-                    refCurrentUser.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                            newCompany.child("imagePath").setValue(downloadURL.toString());
-                            newCompany.child("companyName").setValue(companyNameValue);
-                            newCompany.child("companyAddress").setValue(addressValue);
-                            newCompany.child("companyServices").setValue(servicesValue);
-                            newCompany.child("companyOtherServices").setValue(otherServicesValue);
-                            newCompany.child("companyNotes").setValue(otherNotesValue);
-                            newCompany.child("companyOpeningHours").setValue(openingHoursValue);
-                            newCompany.child("companyContactInfo").setValue(contactInfoValue);
-                            newCompany.child("companyParking").setValue(parkingValue);
-                            newCompany.child("companyPayment").setValue(paymentValue);
-                            newCompany.child("companyAppointment").setValue(appointmentValue);
-                            newCompany.child("uID").setValue(authCurrentUser.getUid());
-                            newCompany.child("companyCategory").setValue(categoriesValue);
-                            newCompany.child("companyState").setValue(statesValue);
-                            newCompany.child("companyRatingAverage").setValue(companyRatingAverage);
-                            newCompany.child("companyRatingTimes").setValue(companyRatingTimes);
-                            refCurrentUser.child("my_company_id").setValue(newCompany.getKey());
-                            newCompany.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
-                                        finish();
-                                        Intent mainActivityIntent = new Intent(AddCompanyActivity.this, MainActivity.class);
-                                        startActivity(mainActivityIntent);
-                                    } else {
-                                        Toast.makeText(AddCompanyActivity.this, "Can't save the Information!",Toast.LENGTH_SHORT).show();
+                        refCurrentUser.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                newCompany.child("imagePath").setValue(downloadUri.toString());
+                                newCompany.child("companyName").setValue(companyNameValue);
+                                newCompany.child("companyAddress").setValue(addressValue);
+                                newCompany.child("companyServices").setValue(servicesValue);
+                                newCompany.child("companyOtherServices").setValue(otherServicesValue);
+                                newCompany.child("companyNotes").setValue(otherNotesValue);
+                                newCompany.child("companyOpeningHours").setValue(openingHoursValue);
+                                newCompany.child("companyContactInfo").setValue(contactInfoValue);
+                                newCompany.child("companyParking").setValue(parkingValue);
+                                newCompany.child("companyPayment").setValue(paymentValue);
+                                newCompany.child("companyAppointment").setValue(appointmentValue);
+                                newCompany.child("uID").setValue(authCurrentUser.getUid());
+                                newCompany.child("companyCategory").setValue(categoriesValue);
+                                newCompany.child("companyState").setValue(statesValue);
+                                newCompany.child("companyRatingAverage").setValue(companyRatingAverage);
+                                newCompany.child("companyRatingTimes").setValue(companyRatingTimes);
+                                refCurrentUser.child("my_company_id").setValue(newCompany.getKey());
+                                newCompany.child("username").setValue(dataSnapshot.child("name").getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            finish();
+                                            Intent mainActivityIntent = new Intent(AddCompanyActivity.this, MainActivity.class);
+                                            startActivity(mainActivityIntent);
+                                        } else {
+                                            Toast.makeText(AddCompanyActivity.this, "Can't save the Information!", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            });
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-
-
+                                });
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
+                        Toast.makeText(AddCompanyActivity.this, "Information saved", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(AddCompanyActivity.this, "Please make sure that all Fields with * are not empty!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
-
-            Toast.makeText(AddCompanyActivity.this, "Information saved",Toast.LENGTH_SHORT).show();
-
-        } else {
-            Toast.makeText(AddCompanyActivity.this, "Please make sure that all Fields with * are not empty!", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
-
 }
